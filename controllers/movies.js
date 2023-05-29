@@ -1,7 +1,8 @@
 const NotFoundError = require('../errors/not-found-err');
+const ForbiddenError = require('../errors/forbidden-err');
 const Movie = require('../models/movie');
 const {
-  HTTP_STATUS_NOT_FOUND, HTTP_STATUS_BAD_REQUEST, okCode,
+  HTTP_STATUS_NOT_FOUND, HTTP_STATUS_BAD_REQUEST, HTTP_STATUS_FORBIDDEN, okCode,
 } = require('../utils/constants');
 const BadRequestError = require('../errors/bad-request-err');
 
@@ -55,6 +56,9 @@ const deleteMovie = (req, res, next) => {
     .then((movie) => {
       if (!movie) {
         throw new NotFoundError(HTTP_STATUS_NOT_FOUND);
+      }
+      if (movie.owner.toString() !== (req.user._id)) {
+        throw new ForbiddenError(HTTP_STATUS_FORBIDDEN);
       }
       movie.deleteOne()
         .then(() => res.status(okCode).send({ message: 'Фильм успешно удален.' }))

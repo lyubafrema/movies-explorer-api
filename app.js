@@ -8,6 +8,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const handleDefaultErr = require('./errors/handle-default-err');
 const NotFoundError = require('./errors/not-found-err');
 const { HTTP_STATUS_NOT_FOUND } = require('./utils/constants');
+const limiter = require('./middlewares/limiter');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(requestLogger);
+app.use(limiter);
 
 app.use(router);
 
