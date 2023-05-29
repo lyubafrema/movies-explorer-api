@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { PORT = 3001, NODE_ENV, JWT_SECRET } = process.env;
+const { PORT = 3100, NODE_ENV, JWT_SECRET } = process.env;
 const defaultJwt = 'secret-key';
 const mongoDbLink = 'mongodb://127.0.0.1:27017/bitfilmsdb';
 
