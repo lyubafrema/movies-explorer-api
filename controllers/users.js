@@ -91,6 +91,9 @@ const updateUser = (req, res, next) => {
   User.findByIdAndUpdate(_id, { email, name }, { new: true, runValidators: true })
     .then((user) => {
       if (!user) {
+        throw new ConflictError(HTTP_STATUS_CONFLICT);
+      }
+      if (email === user.email) {
         throw new NotFoundError(HTTP_STATUS_NOT_FOUND);
       }
       return res.status(updateDataOkCode).send({ message: 'Данные успешно обновлены.' });
