@@ -93,7 +93,7 @@ const updateUser = (req, res, next) => {
       if (!user) {
         throw new ConflictError(HTTP_STATUS_CONFLICT);
       }
-      if (email === user.email) {
+      if (email !== user.email) {
         throw new NotFoundError(HTTP_STATUS_NOT_FOUND);
       }
       return res.status(updateDataOkCode).send({ message: 'Данные успешно обновлены.' });

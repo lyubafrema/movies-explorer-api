@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const { errors } = require('celebrate');
 const { PORT, endpoint } = require('./config');
 const router = require('./routes');
+const cors = require('./middlewares/cors');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const handleDefaultErr = require('./errors/handle-default-err');
 const limiter = require('./middlewares/limiter');
@@ -13,6 +14,7 @@ const app = express();
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors);
 app.use(requestLogger);
 app.use(limiter);
 
